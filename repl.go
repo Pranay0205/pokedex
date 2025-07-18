@@ -28,7 +28,7 @@ func startRepl() {
 			fmt.Printf("Unknown Command")
 		}
 
-		registred_commands[command].callback()
+		registred_commands[command].callback(&config{})
 	}
 }
 

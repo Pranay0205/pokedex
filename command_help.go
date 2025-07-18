@@ -6,7 +6,7 @@ import (
 
 
 
-func commandHelp() error {
+func commandHelp(c *config) error {
 	fmt.Printf("Welcome to the Pokedex!\n")
 	fmt.Printf("Usage:\n\n")
 
