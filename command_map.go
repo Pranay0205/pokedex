@@ -1,75 +1,42 @@
 package main
 
 import (
-	"encoding/json"
+	"errors"
 	"fmt"
-	"io"
-	"net/http"
 )
 
-type location struct {
-	Name string `json:"name"`
-	URL  string `json:"url"`
-}
-
-type config struct {
-	Count    int        `json:"count"`
-	Next     string     `json:"next"`
-	Previous string     `json:"previous"`
-	Result   []location `json:"results"`
-}
-
-
-
-func commandMap(c *config) error{
-
-	var res *http.Response
-	var err error
-
-	if c.Next == "" {
-		res, err = http.Get("https://pokeapi.co/api/v2/location/")
-	} else {
-		res, err = http.Get(c.Next)
-	}
-
+func commandMap(cfg *config) error{
+	locationResp, err := cfg.pokeapiClient.ListLocations(cfg.nextLocationsURL) 
 	if err != nil {
-		return fmt.Errorf("failed to get response from the api: %w", err)
+		return err
 	}
 
-	defer res.Body.Close()
-	body, err := io.ReadAll(res.Body)
-	if err != nil {
-		return fmt.Errorf("failed to read response body: %w", err)
+	cfg.nextLocationsURL = &locationResp.Next
+	cfg.prevLocationsURL = &locationResp.Previous
+
+	for _, loc := range locationResp.Result{
+		fmt.Println(loc.Name)
 	}
-
-	err = json.Unmarshal(body, c)
-
-	if err != nil {
-		return fmt.Errorf("failed to unmarshal response: %w", err)
-	}
-
+	
 	return nil
 }
 
-func commandMapb(c *config) error {
-	res, err := http.Get(c.Previous)
-
-	if err != nil {
-		return fmt.Errorf("failed to get response from the api: %w", err)
+func commandMapb(cfg *config) error {
+	fmt.Println(*cfg.prevLocationsURL)
+	if cfg.prevLocationsURL == nil {
+		return errors.New("you're on the first page")
 	}
 
-	defer res.Body.Close()
-
-	body, err := io.ReadAll(res.Body)
-
+	locationResp, err := cfg.pokeapiClient.ListLocations(cfg.prevLocationsURL)
 	if err != nil {
-		return fmt.Errorf("failed to read response body: %w", err)
+		return err
 	}
 
-	err = json.Unmarshal(body, c)
+	cfg.nextLocationsURL = &locationResp.Next
+	cfg.prevLocationsURL = &locationResp.Previous
 
-	if err != nil {
-		return fmt.Errorf("failed to unmarshal reponse: %w", err)
+	for _, loc := range locationResp.Result {
+		fmt.Println(loc.Name)
 	}
 
 	return nil
