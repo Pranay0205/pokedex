@@ -10,7 +10,7 @@ import (
 )
 
 type config struct {
-	pokeapiClient    pokeapi.Client
+	pokeapiClient     pokeapi.Client
 	nextLocationsURL *string
 	prevLocationsURL *string
 }
@@ -37,7 +37,6 @@ func startRepl(cfg *config) {
 			fmt.Printf("Unknown Command")
 			continue
 		}
-		
 		err := current_command.callback(cfg)
 
 		if err != nil {
