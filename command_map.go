@@ -22,8 +22,7 @@ func commandMap(cfg *config) error{
 }
 
 func commandMapb(cfg *config) error {
-	fmt.Println(*cfg.prevLocationsURL)
-	if cfg.prevLocationsURL == nil {
+	if cfg.prevLocationsURL == nil || *cfg.prevLocationsURL == "" {
 		return errors.New("you're on the first page")
 	}
 
