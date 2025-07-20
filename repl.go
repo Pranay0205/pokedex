@@ -17,6 +17,8 @@ type config struct {
 
 
 func startRepl(cfg *config) {
+	commandHelp(cfg, []string{})
+	
 	scanner := bufio.NewScanner(os.Stdin)	
 	for {
 		fmt.Print("Pokedex > ")
@@ -32,12 +34,17 @@ func startRepl(cfg *config) {
 		}
 
 		command := strings.Fields(prompt)[0]
+		args := []string{}
+		if len(prompt) > 1 {
+			args = strings.Fields(prompt)[1:]
+		}
 		current_command, exists := registred_commands[command]
 		if !exists {
 			fmt.Printf("Unknown Command")
 			continue
 		}
-		err := current_command.callback(cfg)
+
+		err := current_command.callback(cfg, args)
 
 		if err != nil {
 			fmt.Println(err)
