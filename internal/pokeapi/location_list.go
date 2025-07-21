@@ -35,6 +35,7 @@ func (c *Client) ListLocations(pageURL *string) (RespLocation, error){
 		}
 		
 		resp, err := c.httpClient.Do(req)
+		
 		if err != nil {
 			return RespLocation{}, err
 		}
