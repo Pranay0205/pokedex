@@ -4,11 +4,9 @@ import (
 	"fmt"
 )
 
-
-
 func commandHelp(c *config, arg []string) error {
-	fmt.Printf("Welcome to the Pokedex!\n")
-	fmt.Printf("Commands:\n")
+	fmt.Printf("%s%sWelcome to the Pokedex!%s\n", ColorBold, ColorCyan, ColorReset)
+	fmt.Printf("%s%sCommands:%s\n", ColorBold, ColorYellow, ColorReset)
 
 	if len(registred_commands) == 0 {
 		return fmt.Errorf("no commands registry")
@@ -16,8 +14,11 @@ func commandHelp(c *config, arg []string) error {
 
 	i := 1
 	for _, value := range registred_commands {
-			fmt.Printf("%d) %s: %s\n", i, value.name, value.description)
-			i++
+		fmt.Printf("%s%d) %s%s%s: %s%s%s\n", 
+			ColorGreen, i, 
+			ColorBlue, value.name, ColorReset,
+			ColorWhite, value.description, ColorReset)
+		i++
 	}
 
 	return nil

@@ -35,7 +35,7 @@ func (c *Client) ListLocations(pageURL *string) (RespLocation, error){
 		}
 		
 		resp, err := c.httpClient.Do(req)
-		
+
 		if err != nil {
 			return RespLocation{}, err
 		}
@@ -81,6 +81,10 @@ func (c *Client) ExploreLocation(locationName *string) (RespExplore, error) {
 		}
 
 		resp, err := c.httpClient.Do(req)
+		
+		if err != nil {
+			return RespExplore{}, err
+		}
 
 		data, err := io.ReadAll(resp.Body)
 

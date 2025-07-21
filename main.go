@@ -13,6 +13,8 @@ func main() {
 
 	cfg := &config{
 		pokeapiClient: pokeClient,
+		caughtPokemon: map[string]pokeapi.PokemonResp{},
+		maxBaseExperience: 1000,
 	}
 	startRepl(cfg)
 }

@@ -11,6 +11,8 @@ import (
 
 type config struct {
 	pokeapiClient     pokeapi.Client
+	caughtPokemon 		map[string]pokeapi.PokemonResp
+	maxBaseExperience int
 	nextLocationsURL *string
 	prevLocationsURL *string
 }

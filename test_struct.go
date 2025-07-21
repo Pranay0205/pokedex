@@ -4,3 +4,4 @@ type testStruct struct {
 	input string
 	expected []string
 }
+

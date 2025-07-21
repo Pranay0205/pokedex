@@ -2,6 +2,7 @@ package pokeapi
 
 import (
 	"encoding/json"
+	"errors"
 	"io"
 	"net/http"
 )
@@ -31,11 +32,17 @@ func (c *Client) PokemonList(pokemonName string) (PokemonResp, error) {
 		if err != nil {
 			return PokemonResp{}, nil
 		}
+
+
 		
 		defer resp.Body.Close()
 
 		data, err := io.ReadAll(resp.Body)
 
+		if string(data) == "Not Found" {
+			return PokemonResp{}, errors.New("incorrect Pokemon Name")
+		}
+		
 		if err != nil {
 			return PokemonResp{}, err
 		}
