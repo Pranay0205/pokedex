@@ -15,6 +15,11 @@ func init() {
 			description: "Displays all available commands (Usage: help)",
 			callback:    commandHelp,
 		},
+		"pokedex": {
+			name:        "pokedex",
+			description: "Displays all caught pokemon (Usage: pokedex)",
+			callback:    commandPokedex,
+		},
 		"exit": {
 			name:        "exit",
 			description: "Exits the Pokedex application (Usage: exit)",
@@ -40,7 +45,7 @@ func init() {
 				description: "Catches a Pokemon (Usage: catch <pokemon-name>)", 
 				callback: commandCatch,
 		},
-			"inspect": {
+		"inspect": {
 				name: "inspect",
 				description: "Inspects a catched Pokemon (Usage: inspect <pokemon-name>)", 
 				callback: commandInspect,
